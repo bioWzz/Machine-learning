@@ -1,0 +1,12 @@
+library(ConsensusClusterPlus)
+for(clu in c("pam","km","kmdist","hc")){
+  for(dis in c("pearson","spearman","euclidean","binary","maximum","canberra","minkowski","manhattan")){
+    tryCatch({
+      results <- ConsensusClusterPlus(cancerimm,maxK = 10,reps = 100,pItem = 0.8,pFeature = 1,title = paste0(clu,"-",dis),
+                                      clusterAlg = clu,distance = dis,seed = 1262118388.71279,
+                                      plot = "png",writeTable = TRUE)
+      icl <- calcICL(results,title = paste0(clu,"-",dis),plot = "png",writeTable = TRUE)
+    },
+    error = function(e){cat("ERROR :",clu," ",dis," ",conditionMessage(e),"\n")}) 
+   }
+}
